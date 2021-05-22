@@ -1,6 +1,8 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout,Divider } from 'antd';
+import ProyectsList from './ProyectsList';
 import  './style.css'
+import Dasboard from './Dashboard';
 
 const { Sider, Content } = Layout;
 
@@ -9,11 +11,12 @@ const Proyects = () => {
         <div>
             <Layout>
                 <Sider className="site-layout-background">
-                    Sider
+                    <ProyectsList/>
                 </Sider>
+                <Divider type="vertical"  style={{ height: "100%" }}/>
                 <Content>
                     <div className="site-layout-content">
-                        <h1>Proyects</h1>
+                        <Dasboard/>
                     </div>
                 </Content>
             </Layout>
