@@ -1,15 +1,11 @@
-
-import LayoutMain from "./components/layouts/main"
-
-
+import LayoutMain from "./components/layouts/main";
 
 function App() {
-  return (
-        <div>
-          <LayoutMain/>
-
-        </div>
-  );
+	return (
+		<div>
+			<LayoutMain />
+		</div>
+	);
 }
 
 export default App;
