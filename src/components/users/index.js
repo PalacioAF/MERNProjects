@@ -1,11 +1,23 @@
-import React from 'react';
+import React from "react";
+import { Layout, Divider } from "antd";
 
-const Users = () => {
-    return ( 
-        <div>
-            <h1>Users</h1>
-        </div>
-     );
-}
- 
-export default Users;
+import "./style.css";
+import Users from "./Users";
+
+const { Sider, Content } = Layout;
+
+const UserPage = () => {
+	return (
+		<div>
+			<Layout>
+				<Content>
+					<div className="site-layout-content">
+						<Users />
+					</div>
+				</Content>
+			</Layout>
+		</div>
+	);
+};
+
+export default UserPage;
