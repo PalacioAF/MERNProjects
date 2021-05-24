@@ -1,24 +1,46 @@
-import React from 'react';
-import { Layout,Divider } from 'antd';
-import ProyectsList from './ProyectsList';
+import React,{useState} from 'react';
+import { Layout,Row,Col,Modal } from 'antd'
+import Dasboard from './Dashboard'
+import AddButton from '../tasks/TaskAddButton'
 import  './style.css'
-import Dasboard from './Dashboard';
+import ProyectDropdown from './ProyectDropdown';
+import TaskForm from '../tasks/TaskForm';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const Proyects = () => {
+
+    const [isModalVisible, setIsModalVisible] = useState(false)
+
+    const showModal = () => {
+        setIsModalVisible(true)
+      }
+
+    const handleCancel = () => {
+        setIsModalVisible(false)
+      };
+
     return ( 
         <div>
             <Layout>
-                <Sider className="site-layout-background">
-                    <ProyectsList/>
-                </Sider>
-                <Divider type="vertical"  style={{ height: "100%" }}/>
                 <Content>
                     <div className="site-layout-content">
-                        <Dasboard/>
+                    <Row>
+                        <Col span={24}>
+                            <ProyectDropdown/>
+                            <AddButton showModal={showModal}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={24}>
+                            <Dasboard/>
+                        </Col>
+                    </Row>
                     </div>
                 </Content>
+                <Modal title="Task" visible={isModalVisible} onCancel={handleCancel} footer={null}>
+                    <TaskForm setIsModalVisible={setIsModalVisible}/>
+                </Modal>
             </Layout>
         </div>
      );

@@ -1,19 +1,14 @@
 import React from 'react';
-import { List } from 'antd';
-import Proyect from './Proyect';
+import { Menu } from 'antd';
 
-const ProyectsList = () => {
-
-    const proyects=[{id:'1',name:'Alfa'},{id:'2',name:'Beta'}]
+const ProyectsList = ({ proyects,handleMenuClick }) => {
 
     return ( 
-        <List
-        itemLayout="vertical"
-        dataSource={proyects}
-        renderItem={proyect => (
-                <Proyect proyect={proyect}/>
-         )}
-        />
+        <Menu onClick={handleMenuClick}>
+                {proyects.map(proyect=>(
+                    <Menu.Item key={proyect.id}>{proyect.name}</Menu.Item>
+                ))}
+        </Menu>
     )
 }
  

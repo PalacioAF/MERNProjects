@@ -7,3 +7,13 @@
     background: #fff;
 }
 
+
+.dashboard-col{
+  flex:"1 0 25%";
+}
+
+@media (max-width: 992px) {
+  .dashboard-col {
+    flex: 100% !important; 
+  }
+}
