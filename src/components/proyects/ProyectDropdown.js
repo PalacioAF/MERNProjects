@@ -3,9 +3,9 @@ import { Dropdown,Button } from 'antd';
 import ProyectsList from './ProyectsList'
 import { DownOutlined } from '@ant-design/icons';
 
-const ProyectDropdown = () => {
+const ProyectDropdown = ({proyects}) => {
 
-    const proyects=[{id:'1',name:'Alfa'},{id:'2',name:'Beta'}]
+    //const proyects=[{id:'1',name:'Alfa'},{id:'2',name:'Beta'}]
 
     const[state,setState]=useState(false)
 

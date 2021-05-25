@@ -3,12 +3,12 @@ import { Menu, Grid } from 'antd';
 
 const { useBreakpoint } = Grid;
 
-const RightMenu = () => {
+const RightMenu = ({user}) => {
   const { md } = useBreakpoint();
   return (
     <Menu mode={md ? "horizontal" : "inline"}>
       <Menu.Item key="mail">
-        <a href="/#">Signin</a>
+        <a href="/#">{user?user.userName:"User"}</a>
       </Menu.Item>
       <Menu.Item key="app">
         <a href="/#">Signup</a>

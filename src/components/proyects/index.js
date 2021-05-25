@@ -1,14 +1,26 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Layout,Row,Col,Modal } from 'antd'
 import Dasboard from './Dashboard'
 import AddButton from '../tasks/TaskAddButton'
 import  './style.css'
 import ProyectDropdown from './ProyectDropdown';
 import TaskForm from '../tasks/TaskForm';
+import AxiosClient from '../../config/axios'
 
 const { Content } = Layout;
 
 const Proyects = () => {
+
+    const [proyects, setProyects] = useState([])
+
+    useEffect(()=>{
+            const getProyects=async ()=>{
+            console.log("proyect")		
+            const response=await AxiosClient.get('/api/proyect');
+            setProyects(response.data.output)
+            }
+            getProyects() 
+    },[])
 
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -27,7 +39,7 @@ const Proyects = () => {
                     <div className="site-layout-content">
                     <Row>
                         <Col span={24}>
-                            <ProyectDropdown/>
+                            <ProyectDropdown proyects={proyects}/>
                             <AddButton showModal={showModal}/>
                         </Col>
                     </Row>
