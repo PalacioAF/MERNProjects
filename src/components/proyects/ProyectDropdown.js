@@ -2,10 +2,9 @@ import React,{useState} from 'react';
 import { Dropdown,Button } from 'antd';
 import ProyectsList from './ProyectsList'
 import { DownOutlined } from '@ant-design/icons';
+import AxiosClient from "../../config/axios"
 
-const ProyectDropdown = ({proyects}) => {
-
-    //const proyects=[{id:'1',name:'Alfa'},{id:'2',name:'Beta'}]
+const ProyectDropdown = ({proyects,setProyect,setTasks}) => {
 
     const[state,setState]=useState(false)
 
@@ -14,13 +13,14 @@ const ProyectDropdown = ({proyects}) => {
 
     //cuando seleccione un proyecto ejecutar setTitle 
     
-    const handleMenuClick =({ key }) => {
-    console.log(key)
+    const handleMenuClick =async ({ key }) => {
     setState( false )
-    //temporal
-    const temp=proyects.filter(proyect=>proyect.id===key.toString())
-    console.log(temp)
-    setTitle(temp[0].name)
+    //Cambio el placeholder
+    setTitle(proyects.filter(proyect=>proyect._id===key)[0].name)
+    setProyect(proyects.filter(proyect=>proyect._id===key)[0])
+    //consulto las tareas del proyecto seleccionado
+    const response=await AxiosClient.get(`/api/task?proyect=${key}`);
+    setTasks(response.data.output)
     }
 
     const handleVisibleChange = flag => {

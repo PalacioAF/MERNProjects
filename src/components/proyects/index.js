@@ -11,8 +11,16 @@ const { Content } = Layout;
 
 const Proyects = () => {
 
+    //Proyectos
     const [proyects, setProyects] = useState([])
+    //Proyecto Seleccionado
+    const [proyect, setProyect] = useState({})
+    //Tareas del un Proyecto seleccionado
+    const [tasks, setTasks] = useState([])
+    //Tarea Seleccionada
+    const [task, setTask] = useState({})
 
+    //Cuando se inicie el componente buscar los proyectos
     useEffect(()=>{
             const getProyects=async ()=>{
             console.log("proyect")		
@@ -21,6 +29,13 @@ const Proyects = () => {
             }
             getProyects() 
     },[])
+
+    //Si selecciono una tarea ejecutar
+    useEffect(()=>{
+        if(typeof task.name !='undefined'){
+            showModal(true)
+        }
+    },[task])
 
     const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -39,19 +54,19 @@ const Proyects = () => {
                     <div className="site-layout-content">
                     <Row>
                         <Col span={24}>
-                            <ProyectDropdown proyects={proyects}/>
+                            <ProyectDropdown proyects={proyects} setProyect={setProyect} setTasks={setTasks}/>
                             <AddButton showModal={showModal}/>
                         </Col>
                     </Row>
                     <Row>
                         <Col span={24}>
-                            <Dasboard/>
+                            <Dasboard tasks={tasks} setTask={setTask}/>
                         </Col>
                     </Row>
                     </div>
                 </Content>
                 <Modal title="Task" visible={isModalVisible} onCancel={handleCancel} footer={null}>
-                    <TaskForm setIsModalVisible={setIsModalVisible}/>
+                    <TaskForm setIsModalVisible={setIsModalVisible} task={task} setTask={setTask} proyect={proyect}/>
                 </Modal>
             </Layout>
         </div>

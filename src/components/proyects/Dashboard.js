@@ -1,16 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Row,Col,Card } from 'antd';
 import { ReactSortable } from 'react-sortablejs'
 import Task from '../tasks/Task';
 
 
-const Dashboard = () => {
+const Dashboard = ({tasks,setTask}) => {
 
-    const [backlogItems, setBacklogItems] = useState([{id:'1',name:"Page User",description:'crud User',user:'apalacio'},{id:'2',name:"Page Task",description:'crud Task',user:'apalacio'}])
-    const [todoItems, setTodoItems] = useState([{id:'3',name:"Login",description:'Auth',user:'josefinaleongalli'}])
-    const [inprogressItems, setInprogressItems] = useState([{id:'4',name:"Api",description:'node api',user:'josefinaleongalli'}])
+    const [backlogItems, setBacklogItems] = useState([])
+    const [todoItems, setTodoItems] = useState([])
+    const [inprogressItems, setInprogressItems] = useState([])
     const [completed, setCompleted] = useState([])
         
+    useEffect(()=>{
+            if(tasks){
+                setBacklogItems(tasks.filter(task=>task.status==='Backlog'))
+                setTodoItems(tasks.filter(task=>task.status==='ToDo'))
+                setInprogressItems(tasks.filter(task=>task.status==='InProgress'))
+                setCompleted(tasks.filter(task=>task.status==='Completed'))
+            }
+    },[tasks])
 
     return ( 
         <div>
@@ -23,8 +31,8 @@ const Dashboard = () => {
                         list={backlogItems}
                         setList={setBacklogItems}
                         >
-                        {backlogItems.map(item =>{
-                            return <Task key={item.id} task={item}/>
+                        {backlogItems.map(task =>{
+                            return <Task key={task._id} task={task} setTask={setTask}/>
                             })}
                         </ReactSortable>
                     </Card>
@@ -37,8 +45,8 @@ const Dashboard = () => {
                         list={todoItems}
                         setList={setTodoItems}
                         >
-                        {todoItems.map(item =>{
-                            return <Task key={item.id} task={item}/>
+                        {todoItems.map(task =>{
+                            return <Task key={task._id} task={task}  setTask={setTask}/>
                             } )}
                         </ReactSortable>
                     </Card>
@@ -51,8 +59,8 @@ const Dashboard = () => {
                         list={inprogressItems}
                         setList={setInprogressItems}
                         >
-                        {inprogressItems.map(item =>{
-                            return <Task key={item.id} task={item}/>
+                        {inprogressItems.map(task =>{
+                            return <Task key={task._id} task={task}  setTask={setTask}/>
                             } )}
                         </ReactSortable>
                     </Card>
@@ -65,8 +73,8 @@ const Dashboard = () => {
                         list={completed}
                         setList={setCompleted}
                         >
-                        {completed.map(item =>{
-                            return <Task key={item.id} task={item}/>
+                        {completed.map(task =>{
+                            return <Task key={task._id} task={task}  setTask={setTask}/>
                             } )}
                         </ReactSortable>
                     </Card>
