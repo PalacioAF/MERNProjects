@@ -18,9 +18,6 @@ const ProyectDropdown = ({proyects,setProyect,setTasks}) => {
     //Cambio el placeholder
     setTitle(proyects.filter(proyect=>proyect._id===key)[0].name)
     setProyect(proyects.filter(proyect=>proyect._id===key)[0])
-    //consulto las tareas del proyecto seleccionado
-    const response=await AxiosClient.get(`/api/task?proyect=${key}`);
-    setTasks(response.data.output)
     }
 
     const handleVisibleChange = flag => {

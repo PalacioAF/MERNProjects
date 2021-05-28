@@ -4,7 +4,7 @@ import { ReactSortable } from 'react-sortablejs'
 import Task from '../tasks/Task';
 
 
-const Dashboard = ({tasks,setTask}) => {
+const Dashboard = ({tasks,setTask,getTasks}) => {
 
     const [backlogItems, setBacklogItems] = useState([])
     const [todoItems, setTodoItems] = useState([])
@@ -32,7 +32,7 @@ const Dashboard = ({tasks,setTask}) => {
                         setList={setBacklogItems}
                         >
                         {backlogItems.map(task =>{
-                            return <Task key={task._id} task={task} setTask={setTask}/>
+                            return <Task key={task._id} task={task} setTask={setTask} getTasks={getTasks}/>
                             })}
                         </ReactSortable>
                     </Card>
@@ -46,7 +46,7 @@ const Dashboard = ({tasks,setTask}) => {
                         setList={setTodoItems}
                         >
                         {todoItems.map(task =>{
-                            return <Task key={task._id} task={task}  setTask={setTask}/>
+                            return <Task key={task._id} task={task}  setTask={setTask} getTasks={getTasks}/>
                             } )}
                         </ReactSortable>
                     </Card>
@@ -60,7 +60,7 @@ const Dashboard = ({tasks,setTask}) => {
                         setList={setInprogressItems}
                         >
                         {inprogressItems.map(task =>{
-                            return <Task key={task._id} task={task}  setTask={setTask}/>
+                            return <Task key={task._id} task={task}  setTask={setTask} getTasks={getTasks}/>
                             } )}
                         </ReactSortable>
                     </Card>
@@ -74,7 +74,7 @@ const Dashboard = ({tasks,setTask}) => {
                         setList={setCompleted}
                         >
                         {completed.map(task =>{
-                            return <Task key={task._id} task={task}  setTask={setTask}/>
+                            return <Task key={task._id} task={task}  setTask={setTask} getTasks={getTasks}/>
                             } )}
                         </ReactSortable>
                     </Card>

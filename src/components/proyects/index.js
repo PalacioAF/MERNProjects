@@ -27,8 +27,26 @@ const Proyects = () => {
             const response=await AxiosClient.get('/api/proyect');
             setProyects(response.data.output)
             }
-            getProyects() 
+            getProyects()
     },[])
+
+    //Resetar cada vez que cambio de proyecto
+    useEffect(()=>{
+        const getTasks=async()=>{
+            if(typeof proyect.name !='undefined'){
+                setTask({})
+                //consulto las tareas del proyecto seleccionado
+                const response=await AxiosClient.get(`/api/task?proyect=${proyect._id}`);
+                setTasks(response.data.output)
+            }
+        }
+        getTasks()
+    },[proyect])
+
+    const getTasks=async()=>{
+        const response=await AxiosClient.get(`/api/task?proyect=${proyect._id}`);
+        setTasks(response.data.output)
+    }
 
     //Si selecciono una tarea ejecutar
     useEffect(()=>{
@@ -60,13 +78,13 @@ const Proyects = () => {
                     </Row>
                     <Row>
                         <Col span={24}>
-                            <Dasboard tasks={tasks} setTask={setTask}/>
+                            <Dasboard tasks={tasks} setTask={setTask} getTasks={getTasks}/>
                         </Col>
                     </Row>
                     </div>
                 </Content>
                 <Modal title="Task" visible={isModalVisible} onCancel={handleCancel} footer={null}>
-                    <TaskForm setIsModalVisible={setIsModalVisible} task={task} setTask={setTask} proyect={proyect}/>
+                    <TaskForm setIsModalVisible={setIsModalVisible} task={task} setTask={setTask} proyect={proyect}  getTasks={getTasks}/>
                 </Modal>
             </Layout>
         </div>
