@@ -10,7 +10,6 @@ import AxiosClient from '../../config/axios'
 const { Content } = Layout;
 
 const Proyects = () => {
-
     //Proyectos
     const [proyects, setProyects] = useState([])
     //Proyecto Seleccionado
