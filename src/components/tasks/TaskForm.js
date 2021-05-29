@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Input,Form,Button,Select } from 'antd'
+import { Input,Form,Button,Select,notification } from 'antd'
 import AxiosClient from '../../config/axios'
 
 const {Option}=Select;
@@ -26,30 +26,40 @@ const TaskForm = ({setIsModalVisible,task,setTask,proyect,getTasks}) => {
     },[proyect])
 
     const onFinish=async ()=>{
-        const {name,description,user}=form.getFieldsValue()
-        let response
-        let params
-        //Si task esta vacio se hace un post, de lo contrario un put
-        if(typeof task.name =='undefined'){
+        try{
+            const {name,description,user}=form.getFieldsValue()
+            let response
+            let params
+            //Si task esta vacio se hace un post, de lo contrario un put
+            if(typeof task.name =='undefined'){
 
-        params={
-            name:name,
-            description:description,
-            proyect:proyect._id,
-            user:user
-        }    
-        response=await AxiosClient.post('/api/task',params);
+            params={
+                name:name,
+                description:description,
+                proyect:proyect._id,
+                user:user
+            }    
+            response=await AxiosClient.post('/api/task',params);
+            }
+            else{
+            params={
+                name,description,user
+            }    
+            response=await AxiosClient.put(`/api/task/${task._id}`,params); 
+            setTask({})  
+            }
+            notification.success({
+                message: response.data.msg
+            })
+            setIsModalVisible(false)
+            getTasks()
+        }catch(error){
+            notification.error({
+                message: error
+                })
+            setIsModalVisible(false)
+            getTasks()    
         }
-        else{
-        params={
-            name,description,user
-        }    
-        response=await AxiosClient.put(`/api/task/${task._id}`,params); 
-        setTask({})  
-        }
-        console.log(response)
-        setIsModalVisible(false)
-        getTasks()
     }
 
     return ( 

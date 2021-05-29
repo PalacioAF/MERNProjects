@@ -22,9 +22,14 @@ const Proyects = () => {
     //Cuando se inicie el componente buscar los proyectos
     useEffect(()=>{
             const getProyects=async ()=>{
-            console.log("proyect")		
-            const response=await AxiosClient.get('/api/proyect');
-            setProyects(response.data.output)
+                try{
+                    console.log("proyect")		
+                    const response=await AxiosClient.get('/api/proyect');
+                    setProyects(response.data.output)
+                }catch(error){
+                    console.log(error)
+                }
+
             }
             getProyects()
     },[])

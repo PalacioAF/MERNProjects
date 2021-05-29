@@ -1,8 +1,7 @@
-import React,{useState} from 'react';
-import { Dropdown,Button } from 'antd';
+import React,{useState} from 'react'
+import { Dropdown,Button } from 'antd'
 import ProyectsList from './ProyectsList'
-import { DownOutlined } from '@ant-design/icons';
-import AxiosClient from "../../config/axios"
+import { DownOutlined } from '@ant-design/icons'
 
 const ProyectDropdown = ({proyects,setProyect,setTasks}) => {
 

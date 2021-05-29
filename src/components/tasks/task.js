@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card ,Popconfirm} from 'antd';
+import { Card ,Popconfirm,notification } from 'antd';
 import { EditOutlined,DeleteOutlined  } from '@ant-design/icons';
 import AxiosClient from '../../config/axios'
 
@@ -13,7 +13,9 @@ const Task = ({task, setTask, getTasks }) => {
 
     const confirm=async ()=> {
         const response=await AxiosClient.delete(`/api/task/${task._id}`)
-        console.log(response)
+        notification.success({
+            message: response.data.msg
+        })
         getTasks()
     }
       
