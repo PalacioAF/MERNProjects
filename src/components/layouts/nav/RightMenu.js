@@ -1,19 +1,39 @@
 import React from 'react';
-import { Menu, Grid } from 'antd';
+import { Menu, Grid, Dropdown,Button } from 'antd';
+import { DownOutlined } from '@ant-design/icons'
+import styles from '../style.css'
 
 const { useBreakpoint } = Grid;
 
-const RightMenu = ({user}) => {
+const RightMenu = ({ user,setUser }) => {
   const { md } = useBreakpoint();
-  return (
+
+  const menu = (
     <Menu mode={md ? "horizontal" : "inline"}>
-      <Menu.Item key="mail">
-        <a href="/#">{user?user.userName:"User"}</a>
+      <Menu.Item>
+        <strong>
+         Email: {user.email || 'Anonymous'}
+        </strong>
       </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item>
+        <strong>
+         Role: {user.role || 'Anonymous'}
+        </strong>
+      </Menu.Item>
+      <Menu.Divider />
       <Menu.Item key="app">
-        <a href="/#">Signup</a>
+        <Button  to="/" type="link" onClick={()=>{setUser({});window.location.href = '/';localStorage.removeItem('token');}}>Signup</Button>
       </Menu.Item>
     </Menu>
+  )
+
+  return (
+    <Dropdown overlay={menu} trigger={['click']} >
+    <div className={styles.dropdown}>
+      <Button type="link">{user?user.userName:"User"}<DownOutlined /></Button>
+    </div>
+    </Dropdown>
   );
 }
 

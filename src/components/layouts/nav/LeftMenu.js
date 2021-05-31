@@ -6,7 +6,8 @@ import { NavLink } from "react-router-dom";
 
 const { useBreakpoint } = Grid;
 
-const LeftMenu = () => {
+const LeftMenu = ( {user} ) => {
+
   const { md } = useBreakpoint()
   return (
     <Menu theme="light" mode={md ? "horizontal" : "inline"}>
@@ -15,6 +16,8 @@ const LeftMenu = () => {
               Proyects
             </NavLink>
         </Menu.Item>
+        {user.role==="admin"?
+        <>
         <Menu.Item key="2" icon={<UserOutlined />} >
             <NavLink  to="/users">
               Users
@@ -25,6 +28,9 @@ const LeftMenu = () => {
               Teams
             </NavLink>
         </Menu.Item>
+        </>
+        :null}
+
     </Menu>
   );
 }

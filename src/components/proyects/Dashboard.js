@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { Row,Col,Card } from 'antd';
 import { ReactSortable } from 'react-sortablejs'
 import Task from '../tasks/Task';
-
+import AxiosClient from '../../config/axios'
 
 const Dashboard = ({tasks,setTask,getTasks}) => {
 
@@ -20,6 +20,55 @@ const Dashboard = ({tasks,setTask,getTasks}) => {
             }
     },[tasks])
 
+    //Posicion en el array y state seleccionado
+    const [index, setIndex] = useState({})
+    //controlo la finalizacion del movimiento entre state
+    const [end, setEnd] = useState(false)
+
+    useEffect(()=>{
+        if(typeof index.id !='undefined'&& end){
+            let task
+            switch (index.status){
+                case 'Backlog':
+                    task=backlogItems[index.id]
+                    setStatus(task,index.status)
+                break
+                case 'ToDo':
+                    task=todoItems[index.id]
+                    setStatus(task,index.status)
+                break
+                case 'InProgress':
+                    task=inprogressItems[index.id]
+                    setStatus(task,index.status)
+                break
+                case 'Completed':
+                    task=completed[index.id]
+                    setStatus(task,index.status)
+                break
+                default:
+                break    
+            }
+            setIndex({})
+            setEnd(false)
+        }
+    },[index,end,backlogItems,todoItems,inprogressItems,completed])
+
+    const setStatus=async(task,status)=>{
+        try {
+            const {name,description,user}=task
+            const params={
+                name,
+                description,
+                user,
+                status
+            }
+            const response=await AxiosClient.put(`/api/task/${task._id}`,params); 
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return ( 
         <div>
             <Row justify="space-around" align="middle">
@@ -30,6 +79,8 @@ const Dashboard = ({tasks,setTask,getTasks}) => {
                         style={{ minHeight: 500 }}
                         list={backlogItems}
                         setList={setBacklogItems}
+                        onAdd={(e) => setIndex({id:e.newIndex,status:"Backlog"})}
+                        onEnd={()=>setEnd(true)}
                         >
                         {backlogItems.map(task =>{
                             return <Task key={task._id} task={task} setTask={setTask} getTasks={getTasks}/>
@@ -44,6 +95,8 @@ const Dashboard = ({tasks,setTask,getTasks}) => {
                         style={{ minHeight: 500 }}
                         list={todoItems}
                         setList={setTodoItems}
+                        onAdd={(e) => setIndex({id:e.newIndex,status:"ToDo"})}
+                        onEnd={()=>setEnd(true)}
                         >
                         {todoItems.map(task =>{
                             return <Task key={task._id} task={task}  setTask={setTask} getTasks={getTasks}/>
@@ -58,6 +111,8 @@ const Dashboard = ({tasks,setTask,getTasks}) => {
                         style={{ minHeight: 500 }}
                         list={inprogressItems}
                         setList={setInprogressItems}
+                        onAdd={(e) => setIndex({id:e.newIndex,status:"InProgress"})}
+                        onEnd={()=>setEnd(true)}
                         >
                         {inprogressItems.map(task =>{
                             return <Task key={task._id} task={task}  setTask={setTask} getTasks={getTasks}/>
@@ -72,6 +127,8 @@ const Dashboard = ({tasks,setTask,getTasks}) => {
                         style={{ minHeight: 500 }}
                         list={completed}
                         setList={setCompleted}
+                        onAdd={(e) => setIndex({id:e.newIndex,status:"Completed"})}
+                        onEnd={()=>setEnd(true)}
                         >
                         {completed.map(task =>{
                             return <Task key={task._id} task={task}  setTask={setTask} getTasks={getTasks}/>

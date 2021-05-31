@@ -31,6 +31,7 @@ AxiosClient.interceptors.request.use(request => {
         message: 'The session has expired. You must login again.',
         duration: 0,//Fuerza el click en la notificacion
         onClick: () => {
+            localStorage.removeItem('token');
             window.location.href = '/'
           }
       })

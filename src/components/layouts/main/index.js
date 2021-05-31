@@ -11,13 +11,12 @@ import AxiosClient from "../../../config/axios"
 
 const LayoutMain = () => {
 	const { Header, Content, Footer } = Layout;
-	const [user,setUser] =useState()
+	const [user,setUser] =useState({})
 	const [auth,setAuth] =useState(false)
 
 	useEffect(()=>{
 			if(auth ){
 				const getUser=async ()=>{
-				console.log("main")		
 				const response=await AxiosClient.get('/api/login');
 				setUser(response.data.user)
 				}
@@ -26,11 +25,29 @@ const LayoutMain = () => {
 			
 	},[auth])
 
+	//Si se Recarga la pagina recupero usuario
+	useEffect(()=>{
+			const getUser=async ()=>{
+			const token=localStorage.getItem('token');
+			if(token){	
+			try {
+				const response=await AxiosClient.get('/api/login');
+				setUser(response.data.user)
+			}
+			catch (error) {
+				console.log(error)
+			}
+			}
+			
+			}
+			getUser() 
+	},[])
+
 	return (
 		<div>
 			<Layout className="layout" style={{ minHeight: "100vh" }}>
 				<Header style={{ background: "#fff" }}>
-					<Navbar user={user}/>
+					<Navbar user={user} setUser={setUser}/>
 				</Header>
 				<Content
 					style={{ padding: "0 20px", marginTop: "10px", marginBottom: "20px" }}

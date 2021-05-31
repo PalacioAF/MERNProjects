@@ -5,7 +5,7 @@ import { Drawer, Button } from 'antd';
 import { Link } from "react-router-dom";
 
 
-const Navbar = ({user}) => {
+const Navbar = ({ user,setUser }) => {
 
 	const[state,setState]=useState({
 		visible: false
@@ -30,14 +30,13 @@ const Navbar = ({user}) => {
 				Proyects
 			</Link>
 		</div>
-		{user?
-		(		
+		{typeof user.userName !='undefined'?
 		<div className="menuCon">
 			<div className="leftMenu">
-				<LeftMenu />
+				<LeftMenu user={user} />
 			</div>
 			<div className="rightMenu">
-				<RightMenu user={user}/>
+				<RightMenu user={user} setUser={setUser}/>
 			</div>
 			<Button className="barsMenu" type="primary" onClick={showDrawer}>
 				<span className="barsBtn"></span>
@@ -49,11 +48,10 @@ const Navbar = ({user}) => {
 				onClose={onClose}
 				visible={state.visible}
 			>
-				<LeftMenu />
-				<RightMenu user={user}/>
+				<LeftMenu user={user} />
+				<RightMenu user={user} setUser={setUser}/>
 			</Drawer>
-
-		</div>)
+		</div>
 		:null}
 
 	</nav>
