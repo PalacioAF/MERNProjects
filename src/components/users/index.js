@@ -11,8 +11,18 @@ const { Content } = Layout;
 const UsersPage = () => {
 	//Cambio el estado de los users
 	const [users, setUsers] = useState([]);
-	//Cambio el estado de un user
+
+	//Cambio el estado de un user seleccionado
 	const [user, setUser] = useState({});
+
+	
+	useEffect(()=>{
+		if(typeof user.userName !='undefined')
+		{
+		showModal(true)
+    }
+	},[user])
+
 
 	//Obtengo todos los usuarios del endpoint
 	const getAllUsers = async () => {
@@ -50,7 +60,7 @@ const UsersPage = () => {
 						</Row>
 						<Row>
 							<Col span={24}>
-								<UsersTable users={users} />
+								<UsersTable users={users} showModal={showModal} setUser={setUser} />
 							</Col>
 						</Row>
 					</div>
@@ -60,12 +70,14 @@ const UsersPage = () => {
 					visible={isModalVisible}
 					footer={null}
 					onCancel={handleCancel}
+				
 				>
 					<UserForm
 						getAllUsers={getAllUsers}
 						setIsModalVisible={setIsModalVisible}
 						setUser={setUser}
 						user={user}
+						
 					/>
 				</Modal>
 			</Layout>

@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Input, Form, Button } from "antd";
+import { Input, Form, Button,Select,notification } from "antd";
 import AxiosClient from "../../config/axios";
 
 const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
+	
+
 	//Seteo el nuevo user
-	const [newUser, setNewUser] = useState({
+		const [newUser, setNewUser] = useState({
 		firstName: "",
 		lastName: "",
 		userName: "",
 		email: "",
 		password: "",
-		role: ""
+		role: "",
+		status: ""
 	});
+
+	const [form] = Form.useForm();
 
 	//EDITO O AGREGO
 	useEffect(() => {
-		if (typeof user.name != "undefined") {
-			form.setFieldsValue(user);
+		if (typeof user.userName != "undefined") {
+			form.setFieldsValue({	firstName:user.firstName,
+			lastName:user.lastName,
+			userName: user.userName,
+			email: user.email,
+			password: user.password,
+			role: user.role,
+			status:user.status});
 		} else {
 			form.setFieldsValue(newUser);
 		}
-	}, [user]);
+	}, [form,user]);
 
-	const [form] = Form.useForm();
 
 	form.setFieldsValue(newUser);
 
@@ -32,12 +42,13 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 	};
 
 	const onFinish = async () => {
-		const { firstName, lastName, userName, email, password, role } =
+		try{
+		const { firstName, lastName, userName, email, password, role ,status } =
 			form.getFieldsValue();
 		let response;
 		let params;
 		//Si task esta vacio se hace un post, de lo contrario un put
-		if (typeof user.name == "undefined") {
+		if (typeof user.userName == "undefined") {
 			params = {
 				firstName: firstName,
 				lastName: lastName,
@@ -54,16 +65,31 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 				userName,
 				email,
 				password,
-				role
+				role,
+				status
 			};
 			response = await AxiosClient.put(`/api/user/${user._id}`, params);
 			setUser({});
 		}
 		console.log(response);
-
+		notification.success({
+			message: response.data.msg
+	})
 		setIsModalVisible(false);
 		getAllUsers();
-	};
+	}catch(error){
+		notification.error({
+				message: error
+				})
+		setIsModalVisible(false)
+		getAllUsers()    
+}
+}
+
+	const { Option } = Select;
+	function handleChange(value) {
+		console.log(`selected ${value}`);
+	}
 
 	return (
 		<Form
@@ -75,7 +101,7 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 		>
 			<Form.Item
 				name="firstName"
-				label="firstName"
+				label="FirstName"
 				className="mb-1 mt-1"
 				rules={[{ required: true }]}
 			>
@@ -83,7 +109,7 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 			</Form.Item>
 			<Form.Item
 				name="lastName"
-				label="lastName"
+				label="LastName"
 				className="mb-1 mt-1"
 				rules={[{ required: true }]}
 			>
@@ -109,18 +135,31 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 				name="password"
 				label="Password"
 				className="mb-1 mt-1"
-				rules={[{ required: true }]}
-			>
-				<Input />
+				rules={[{ required: true }]}			>
+				<Input type="password" />
 			</Form.Item>
 			<Form.Item
 				name="role"
-				label="role"
+				label="Role"
 				className="mb-1 mt-1"
-				rules={[{ required: true }]}
-			>
-				<Input />
+				rules={[{ required: true }]}>
+				<Select defaultValue="admin" style={{ width: 120 }} onChange={handleChange}>
+      		<Option value="user">user</Option>                
+         	<Option value="admin">admin</Option>
+				</Select>
 			</Form.Item>
+			{typeof user.userName != "undefined" ? 
+						<Form.Item
+						name="status"
+						label="Status"
+						className="mb-1 mt-1"
+						rules={[{ required: true }]}			>				 
+					<Select style={{ width: 120 }} onChange={handleChange}>
+							 <Option value="enabled">enabled</Option>
+							<Option value="disabled">disabled</Option>
+						</Select>
+					</Form.Item>
+			: null}
 			<Form.Item>
 				<Button type="primary" htmlType="submit">
 					Add

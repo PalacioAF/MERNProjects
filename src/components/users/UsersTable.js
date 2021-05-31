@@ -1,29 +1,84 @@
 import React from "react";
-import { Table } from "antd";
+import { Table,Tag} from "antd";
+import { EditOutlined} from '@ant-design/icons';
+import {useFilter} from "../../hook/useFilter"
 
-const UsersTable = ({ users }) => {
+const UsersTable = ({ users,setUser}) => {
+	const {getColumnSearchProps}=useFilter()
+
+
 	const columns = [
 		{
-			title: "USERNAME",
+			title: "First Name",
+			dataIndex: "firstName",
+			key: "firstname",
+			
+		},
+		{
+			title: "Last Name",
+			dataIndex: "lastName",
+			key: "lastname",
+			...getColumnSearchProps('LastName','lastname')
+		
+		},
+		{
+			title: "User Name",
 			dataIndex: "userName",
 			key: "username",
-			render: (user) => <i>{user}</i>
+			
 		},
 		{
-			title: "EMAIL",
+			title: "Email",
 			dataIndex: "email",
-			key: "email"
+			key: "email",
+			...getColumnSearchProps('Email','email')
 		},
 		{
-			title: "ROLE",
+			title: "Role",
 			dataIndex: "role",
-			key: "role"
+			key: "role",
+			filters: [
+				{
+					text: 'admin',
+					value: 'admin',
+				},
+				{
+					text: 'user',
+					value: 'user',
+				},
+			],
+			onFilter: (value, record) => record.role.indexOf(value) === 0,
+		},
+		{
+			title: "Status",
+			dataIndex: "status",
+			key: "status",
+			filters: [
+				{
+					text: 'enabled',
+					value: 'enabled',
+				},
+				{
+					text: 'disabled',
+					value: 'disabled',
+				},
+			],
+			onFilter: (value, record) => record.status.indexOf(value) === 0,
+			render: (status,row) =>( <>
+			 <Tag color={status=== "enabled" ? "green":"red" } key={row._id} >
+				{row.status}
+				</Tag></>  ) 			
+		},
+		{
+			title: "ACTIONS",
+	    key: "actions",
+	    render: (row) => <EditOutlined  key="edit" onClick={()=>setUser(row)} />
 		}
 	];
 
 	return (
 		<div>
-			<Table dataSource={users} columns={columns} />
+			<Table dataSource={users} columns={columns} rowKey="_id" />
 		</div>
 	);
 };
