@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Grid } from 'antd';
-import { DesktopOutlined, UserOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
+import { DesktopOutlined, UserOutlined, DeploymentUnitOutlined,ContactsOutlined } from '@ant-design/icons';
 import { NavLink } from "react-router-dom";
 
 
@@ -26,6 +26,11 @@ const LeftMenu = ( {user} ) => {
         <Menu.Item key="3" icon={<DeploymentUnitOutlined />} >
             <NavLink  to="/teams">
               Teams
+            </NavLink>            
+        </Menu.Item>
+        <Menu.Item key="4" icon={<ContactsOutlined  />} >
+          <NavLink  to="/aboutUs">
+              About Us
             </NavLink>
         </Menu.Item>
         </>

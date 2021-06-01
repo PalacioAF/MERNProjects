@@ -6,6 +6,8 @@ import Proyects from "../../proyects";
 import Users from "../../users";
 import Teams from "../../team";
 import LoginPage from "../../login";
+import AboutUs from "../../aboutUs"
+
 import "../style.css";
 import AxiosClient from "../../../config/axios"
 
@@ -58,6 +60,7 @@ const LayoutMain = () => {
 							<Route path="/proyects" element={<Proyects />} />
 							<Route path="/users" element={<Users />} />
 							<Route path="/teams" element={<Teams />} />
+							<Route path="/aboutUs" element = {<AboutUs />} />
 						</Routes>
 					</div>
 				</Content>
