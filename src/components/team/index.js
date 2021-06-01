@@ -66,6 +66,7 @@ getAllProyects()
 	//Cerrar el modal
 	const handleCancel = () => {
 		setIsModalVisible(false);
+		setProyect({})
 	};
 	return (
 		<div>

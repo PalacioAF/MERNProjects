@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import LeftMenu from './LeftMenu'
 import RightMenu from './RightMenu'
 import { Drawer, Button } from 'antd';
-import { Link } from "react-router-dom";
 
 
 const Navbar = ({ user,setUser }) => {
@@ -26,9 +25,7 @@ const Navbar = ({ user,setUser }) => {
 	return ( 
 		<nav className="menuBar">
 		<div className="logo">
-			<Link  to="/">
-				Proyects
-			</Link>
+			<Button type="link" className="a">ToPlan</Button>
 		</div>
 		{typeof user.userName !='undefined'?
 		<div className="menuCon">

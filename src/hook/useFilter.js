@@ -52,6 +52,7 @@ export const useFilter = () => {
     const handleSearch = (selectedKeys, confirm) => {
         confirm()
         setSearch({ searchText: selectedKeys[0] })
+        console.log(search)
     }
 
     const handleReset = clearFilters => {

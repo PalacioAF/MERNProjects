@@ -20,7 +20,7 @@ const UsersPage = () => {
 		if(typeof user.userName !='undefined')
 		{
 		showModal(true)
-    }
+    	}
 	},[user])
 
 
@@ -45,6 +45,7 @@ const UsersPage = () => {
 
 	//Cerrar el modal
 	const handleCancel = () => {
+		setUser({})
 		setIsModalVisible(false);
 	};
 
@@ -66,7 +67,7 @@ const UsersPage = () => {
 					</div>
 				</Content>
 				<Modal
-					title="Add User"
+					title="User"
 					visible={isModalVisible}
 					footer={null}
 					onCancel={handleCancel}
@@ -77,7 +78,6 @@ const UsersPage = () => {
 						setIsModalVisible={setIsModalVisible}
 						setUser={setUser}
 						user={user}
-						
 					/>
 				</Modal>
 			</Layout>

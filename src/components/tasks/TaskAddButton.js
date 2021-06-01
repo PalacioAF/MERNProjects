@@ -4,7 +4,7 @@ import { PlusCircleFilled } from '@ant-design/icons';
 
 const AddButton = ({showModal}) => {
     return ( 
-        <Tooltip title="Add Book">
+        <Tooltip title="Add Task">
             <Button type="primary" 
             style={{ marginBottom: '16px', float:'right' }} 
             icon={<PlusCircleFilled />}

@@ -71,7 +71,7 @@ const Dashboard = ({tasks,setTask,getTasks}) => {
 
     return ( 
         <div>
-            <Row justify="space-around" align="middle">
+            <Row justify="space-around" >
                 <Col sm={24} md={10} lg={5}  className="dashboard-col"> 
                    <Card title="Backlog" bodyStyle={{backgroundColor: '#ececec' }} >
                         <ReactSortable

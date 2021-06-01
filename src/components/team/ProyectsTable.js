@@ -1,6 +1,6 @@
 import React from "react";
-import { Table,Tag} from "antd";
-import { EditOutlined,DeleteOutlined,Popconfirm} from '@ant-design/icons';
+import { Table,Tag,Popconfirm } from "antd";
+import { EditOutlined,DeleteOutlined } from '@ant-design/icons';
 import {useFilter} from "../../hook/useFilter"
 
 
@@ -48,8 +48,15 @@ const ProyectsTable = ({ proyects,setProyect,handleDelete}) => {
 		{  	title: "ACTIONS",
 				key: "actions",
 				render: (row) =><>
-				 <EditOutlined  key="edit" onClick={()=>setProyect(row)} />			
-         <DeleteOutlined key="delete" onClick={()=>handleDelete(row)}/>      
+					<EditOutlined  key="edit" onClick={()=>setProyect(row)} />			
+					<Popconfirm
+						title="Are you sure to delete this task?"
+						onConfirm={()=>handleDelete(row)}
+						okText="Yes"
+						cancelText="No"
+						>
+						<DeleteOutlined key="delete"  />
+					</Popconfirm>      
 				</>		
 		}
 	];

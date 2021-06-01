@@ -8,14 +8,18 @@ const TaskForm = ({setIsModalVisible,task,setTask,proyect,getTasks}) => {
 
     const [users, setUsers] = useState([])
 
+    const [btnLabel, setBtnLabel] = useState("Add")
+
     const [form] = Form.useForm()
 
     //Seteo los valor dependiendo si es un alta o modificacion
     useEffect(()=>{
         if(typeof task.name !='undefined'){
+            setBtnLabel("Edit")
             form.setFieldsValue({name:task.name, description:task.description,user:task.user._id})
         }
         else{
+            setBtnLabel("Add")
             form.setFieldsValue({name:'', description:'',user:''})
         }
     },[form,task])
@@ -45,12 +49,12 @@ const TaskForm = ({setIsModalVisible,task,setTask,proyect,getTasks}) => {
             params={
                 name,description,user
             }    
-            response=await AxiosClient.put(`/api/task/${task._id}`,params); 
-            setTask({})  
+            response=await AxiosClient.put(`/api/task/${task._id}`,params);      
             }
             notification.success({
                 message: response.data.msg
             })
+            setTask({})  
             setIsModalVisible(false)
             getTasks()
         }catch(error){
@@ -78,8 +82,8 @@ const TaskForm = ({setIsModalVisible,task,setTask,proyect,getTasks}) => {
                 </Select>
             </Form.Item>
             <Form.Item >
-                <Button type="primary" htmlType="submit">
-                    Add
+                <Button type="primary" htmlType="submit" style={{ float:'right' }} >
+                    {btnLabel}
                 </Button>
             </Form.Item>
         </Form>

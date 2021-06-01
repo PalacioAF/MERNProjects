@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Input, Form, Button,Select,notification } from "antd";
 import AxiosClient from "../../config/axios";
 
+const { Option } = Select;
+
 const ProyectForm = ({ setIsModalVisible, proyect, setProyect, getAllProyects,users}) => {
-	//Seteo el nuevo user
-	
-	const [newProyect, setNewProyect] = useState({
-    name: "",
-  description:"",
-  creator:"",
-  team: []
-	});
+
+	const [btnLabel, setBtnLabel] = useState("Add")
 
 	const [form] = Form.useForm();
 	//EDITO O AGREGO
@@ -21,14 +17,21 @@ const ProyectForm = ({ setIsModalVisible, proyect, setProyect, getAllProyects,us
 			creator:proyect.creator._id,
 			team: proyect.team.map(user => {return  user._id} )
 		});
-			console.log(proyect.team)
+			setBtnLabel("Edit")
 		} else {
-			form.setFieldsValue(newProyect);
+			setBtnLabel("Add")
+			form.setFieldsValue({
+				name: "",
+				description:"",
+				creator:"",
+				team: []
+				  
+			});
 		}
 	}, [form,proyect]);
 
 
-	form.setFieldsValue(newProyect);
+	//form.setFieldsValue(newProyect);
 
 	const validateMessages = {
 		// eslint-disable-next-line
@@ -58,30 +61,23 @@ const ProyectForm = ({ setIsModalVisible, proyect, setProyect, getAllProyects,us
         team
 			};
 			response = await AxiosClient.put(`/api/proyect/${proyect._id}`, params);
-			setProyect({});
+			
 		}
 		console.log(response);
 		notification.success({
 			message: response.data.msg
 	})
-
+		setProyect({});
 		setIsModalVisible(false);
 		getAllProyects();
 	}
-catch(error){
-		notification.error({
-				message: error
-				})
-		setIsModalVisible(false)
-		getAllProyects()    
-}
-}
-
-
-
-	const { Option } = Select;
-	function handleChange(value) {
-		console.log(`selected ${value}`);
+	catch(error){
+			notification.error({
+					message: error
+					})
+			setIsModalVisible(false)
+			getAllProyects()    
+	}
 	}
 
 	return (
@@ -133,8 +129,8 @@ catch(error){
                 </Select>
 			</Form.Item>			
 			<Form.Item>
-				<Button type="primary" htmlType="submit">
-					Add
+				<Button type="primary" htmlType="submit" style={{ float:'right' }}>
+					{btnLabel}
 				</Button>
 			</Form.Item>
 		</Form>

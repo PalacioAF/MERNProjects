@@ -21,20 +21,21 @@ const Task = ({task, setTask, getTasks }) => {
       
 
     return ( 
-        <Card title= {task.name} key={task._id} hoverable  style={{ marginBottom: 10 }}
-        actions={[
-        <EditOutlined  key="edit"  onClick={onIconClick} />,
-        <Popconfirm
-        title="Are you sure to delete this task?"
-        onConfirm={confirm}
-        okText="Yes"
-        cancelText="No"
-        >
-        <DeleteOutlined key="delete"  />
-        </Popconfirm>,
-        ]} >
-            <Meta title={task.description} description={task.user.userName} />
-        </Card>
+            <Card title= {task.name} key={task._id} hoverable  style={{ marginBottom: 10 }}
+            actions={[
+            <EditOutlined  key="edit"  onClick={onIconClick} />,
+            <Popconfirm
+            title="Are you sure to delete this task?"
+            onConfirm={confirm}
+            okText="Yes"
+            cancelText="No"
+            >
+            <DeleteOutlined key="delete"  />
+            </Popconfirm>,
+            ]} >
+                <p>{task.description}</p>
+                <Meta  description={task.user.userName} />
+            </Card>
      );
 }
  

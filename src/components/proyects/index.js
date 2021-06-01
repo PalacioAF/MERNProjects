@@ -67,6 +67,7 @@ const Proyects = () => {
 
     const handleCancel = () => {
         setIsModalVisible(false)
+        setTask({})
       };
 
     return ( 

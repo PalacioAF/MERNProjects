@@ -3,18 +3,9 @@ import { Input, Form, Button,Select,notification } from "antd";
 import AxiosClient from "../../config/axios";
 
 const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
-	
 
-	//Seteo el nuevo user
-		const [newUser, setNewUser] = useState({
-		firstName: "",
-		lastName: "",
-		userName: "",
-		email: "",
-		password: "",
-		role: "",
-		status: ""
-	});
+
+	const [btnLabel, setBtnLabel] = useState("Add")
 
 	const [form] = Form.useForm();
 
@@ -28,13 +19,21 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 			password: user.password,
 			role: user.role,
 			status:user.status});
+			setBtnLabel("Edit")
 		} else {
-			form.setFieldsValue(newUser);
+			setBtnLabel("Add")
+			form.setFieldsValue(
+				{
+				firstName: "",
+				lastName: "",
+				userName: "",
+				email: "",
+				password: "",
+				role: "",
+				status: ""});
 		}
 	}, [form,user]);
 
-
-	form.setFieldsValue(newUser);
 
 	const validateMessages = {
 		// eslint-disable-next-line
@@ -69,13 +68,14 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 				status
 			};
 			response = await AxiosClient.put(`/api/user/${user._id}`, params);
-			setUser({});
+			
 		}
 		console.log(response);
 		notification.success({
 			message: response.data.msg
 	})
 		setIsModalVisible(false);
+		setUser({});
 		getAllUsers();
 	}catch(error){
 		notification.error({
@@ -161,8 +161,8 @@ const UserForm = ({ setIsModalVisible, user, setUser, getAllUsers }) => {
 					</Form.Item>
 			: null}
 			<Form.Item>
-				<Button type="primary" htmlType="submit">
-					Add
+				<Button type="primary" htmlType="submit"  style={{ float:'right' }}>
+					{btnLabel}
 				</Button>
 			</Form.Item>
 		</Form>
