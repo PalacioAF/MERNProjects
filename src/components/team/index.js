@@ -39,21 +39,27 @@ const TeamsPage = () => {
 },[])
 	
 const getAllUsers = async () => {
-	const response = await AxiosClient.get("/api/user");
-	//guardo los datos de la respuesta en la variable users
-	setUsers(response.data.output);
+	try{
+		const response = await AxiosClient.get("/api/user");
+		//guardo los datos de la respuesta en la variable users
+		setUsers(response.data.output);
+	}catch(error){
+		console.log(error)
+	}
+
 };
 
 
-
-
-
-
 const handleDelete = async (proyect)=> {
+	try{
 	const response=await AxiosClient.delete(`/api/proyect/${proyect._id}`);
 	notification.success({
 		message: response.data.msg
-})
+	})
+	}catch(error){
+		console.log(error)
+	}
+
 getAllProyects()
 }
   const [isModalVisible, setIsModalVisible] = useState(false);

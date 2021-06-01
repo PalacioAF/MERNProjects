@@ -26,9 +26,13 @@ const UsersPage = () => {
 
 	//Obtengo todos los usuarios del endpoint
 	const getAllUsers = async () => {
+		try{
 		const response = await AxiosClient.get("/api/user");
 		//guardo los datos de la respuesta en la variable users
 		setUsers(response.data.output);
+		}catch(error){
+			console.log(error)
+		}
 	};
 
 	//Efectuo la funcion apenas se abre la pagina

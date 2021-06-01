@@ -40,16 +40,24 @@ const Proyects = () => {
             if(typeof proyect.name !='undefined'){
                 setTask({})
                 //consulto las tareas del proyecto seleccionado
+                try{
                 const response=await AxiosClient.get(`/api/task?proyect=${proyect._id}`);
                 setTasks(response.data.output)
+                }catch(error){
+                    console.log(error)
+                }
             }
         }
         getTasks()
     },[proyect])
 
     const getTasks=async()=>{
+        try{
         const response=await AxiosClient.get(`/api/task?proyect=${proyect._id}`);
         setTasks(response.data.output)
+        }catch(error){
+            console.log(error)
+        }
     }
 
     //Si selecciono una tarea ejecutar
@@ -78,7 +86,10 @@ const Proyects = () => {
                     <Row>
                         <Col span={24}>
                             <ProyectDropdown proyects={proyects} setProyect={setProyect} setTasks={setTasks}/>
+                            {typeof proyect.name !='undefined'?
                             <AddButton showModal={showModal}/>
+                            :null}
+                            
                         </Col>
                     </Row>
                     <Row>

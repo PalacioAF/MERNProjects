@@ -1,10 +1,11 @@
 import React from 'react';
-import {Row,Col,Layout,Divider,Card}  from "antd"
+import { Row,Col,Divider }  from "antd"
 import Cards from './Cards';
 import img1 from "../../img/josefinaleon.jpg"
+import img2 from "../../img/apalacio.jpg"
 
 
-const { Content } = Layout;
+
 const contacts = [{
   id: "1",
   name: "Josefina Leon Galli",
@@ -14,9 +15,9 @@ const contacts = [{
 },
 { id:"2",
   name: "Alberto Federico Palacio",
-  img: img1,
+  img: img2,
   git:"https://github.com/PalacioAF",
-  linkedin:""
+  linkedin:"https://www.linkedin.com/in/afpalacio"
 }]
 
 const AboutUs = () =>{

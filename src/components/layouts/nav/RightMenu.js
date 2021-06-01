@@ -23,7 +23,7 @@ const RightMenu = ({ user,setUser }) => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="app">
-        <Button  to="/" type="link" onClick={()=>{setUser({});window.location.href = '/';localStorage.removeItem('token');}}>Signup</Button>
+        <Button  to="/" type="link" onClick={()=>{setUser({});window.location.href = '/';localStorage.removeItem('token');}}>Logout</Button>
       </Menu.Item>
     </Menu>
   )

@@ -18,7 +18,7 @@ const UsersTable = ({ users,setUser}) => {
 			title: "Last Name",
 			dataIndex: "lastName",
 			key: "lastname",
-			...getColumnSearchProps('LastName','lastname')
+			...getColumnSearchProps('Last Name','lastName')
 		
 		},
 		{
